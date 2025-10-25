@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createFallingPhoto(index, container) {
         const img = document.createElement('img');
-        img.src = `${index}.jpg`;
+        img.src = `${index}.png`;
         img.className = 'falling-photo';
         img.style.left = `${Math.random() * 80 + 10}%`;
         img.style.animationDuration = `${Math.random() * 4 + 6}s`;
@@ -215,4 +215,93 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Başlangıç
     showScene('scene-start');
+});
+
+// ===================================
+//   VİDEO OYNATICI KODLARI
+// ===================================
+
+// Sayfanın tamamen yüklendiğinden emin olalım
+// ===============================================
+//   ALTERNATİF VİDEO OYNATICI KODLARI (BLOB)
+// ===============================================
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Gerekli HTML elementlerini seçelim
+    const videoModal = document.getElementById('video-modal');
+    const playButton = document.getElementById('btn-play-video');
+    const closeButton = document.getElementById('btn-close-video');
+    const video = document.getElementById('birthday-video');
+
+    // ÖNEMLİ: video.mp4 yazan yeri kendi video dosyanızın yolu ve adıyla değiştirin.
+    // (index.html ile aynı klasördeyse sadece adı yeterlidir)
+    const videoDosyaYolu = 'video.mp4'; 
+    
+    // Videonun geçici URL'sini saklamak için bir değişken
+    let videoBlobURL = null; 
+
+    // Elementlerin bulunup bulunmadığını kontrol edelim
+    if (playButton && videoModal && closeButton && video) {
+        
+        // "BANA TIKLA ÇABUK" butonuna tıklanınca...
+        playButton.addEventListener('click', async (e) => {
+            e.preventDefault(); 
+            videoModal.style.display = 'flex'; // Video penceresini görünür yap
+
+            try {
+                // 1. Videoyu daha önce yüklemediysek (ilk tıklama)
+                if (!videoBlobURL) {
+                    console.log("Video yükleniyor...");
+                    
+                    // Videoyu 'fetch' komutuyla bir veri yığını (blob) olarak çekiyoruz
+                    const response = await fetch(videoDosyaYolu);
+                    
+                    if (!response.ok) {
+                        throw new Error(`Video dosyası yüklenemedi: ${response.statusText} (Dosya yolu: ${videoDosyaYolu})`);
+                    }
+                    
+                    const videoBlob = await response.blob();
+                    
+                    // Veri yığınından geçici, tarayıcının kullanabileceği bir URL oluşturuyoruz
+                    videoBlobURL = URL.createObjectURL(videoBlob);
+                    console.log("Video geçici URL oluşturuldu.");
+                }
+                
+                // 2. Videonun kaynağını (src) bu geçici URL olarak ayarla
+                video.src = videoBlobURL;
+                
+                // 3. Videoyu oynat
+                video.play();
+
+            } catch (error) {
+                console.error('Video yükleme hatası:', error);
+                // Hata mesajını doğrudan ekrana da yazdırabiliriz
+                const errorText = document.createElement('p');
+                errorText.style.color = 'red';
+                errorText.innerText = `HATA: Video yüklenemedi. Dosya yolunu kontrol edin: ${videoDosyaYolu}`;
+                video.parentElement.prepend(errorText); // Hata mesajını video modalına ekle
+            }
+        });
+
+        // Kapatma (X) butonuna tıklanınca...
+        closeButton.addEventListener('click', () => {
+            videoModal.style.display = 'none'; // Video penceresini gizle
+            video.pause(); // Videoyu duraklat
+            video.currentTime = 0; // Videoyu başa sar
+        });
+
+        // Opsiyonel: Siyah arka plana tıklayınca da kapat
+        videoModal.addEventListener('click', (e) => {
+            // Eğer tıklanan yer videonun kendisi değil de dışarıdaki siyah alansa...
+            if (e.target === videoModal) { 
+                videoModal.style.display = 'none';
+                video.pause();
+                video.currentTime = 0;
+            }
+        });
+
+    } else {
+        console.error('Video modal elementleri bulunamadı. HTML idlerini kontrol edin.');
+    }
 });
