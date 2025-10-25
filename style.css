@@ -20,15 +20,14 @@ body {
 font-family: 'Poppins', sans-serif;
 background-color: var(--background-color);
 color: var(--text-color);
-/* display: flex vb. özellikler no-scroll sınıfına taşındı */
+display: flex;
+justify-content: center;
+align-items: center;
 text-align: center;
 }
 
 /* Sadece kaydırma olmayan sahnelerde (fotoğraf, başlangıç) kullanılacak sınıf */
 body.no-scroll {
-display: flex;
-justify-content: center;
-align-items: center;
 min-height: 100vh;
 overflow: hidden;
 }
