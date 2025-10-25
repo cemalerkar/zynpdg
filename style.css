@@ -1,236 +1,377 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 :root {
-    --primary-color: #ff7f50; /* Canlı mercan */
-    --secondary-color: #2c3e50; /* Gece mavisi */
-    --background-color: #1a1a2e; /* Koyu uzay mavisi */
-    --text-color: #e0e0e0;
-    --light-bg: #16213e;
+--primary-color: #ff7f50; /* Canlı mercan */
+--secondary-color: #2c3e50; /* Gece mavisi */
+--background-color: #1a1a2e; /* Koyu uzay mavisi */
+--text-color: #e0e0e0;
+--light-bg: #16213e;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
 }
+
+/* --- KISIM 1: TEMEL BODY VE KAYDIRMA AYARLARI --- */
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow: hidden;
-    text-align: center;
+font-family: 'Poppins', sans-serif;
+background-color: var(--background-color);
+color: var(--text-color);
+/* display: flex vb. özellikler no-scroll sınıfına taşındı */
+text-align: center;
 }
 
+/* Sadece kaydırma olmayan sahnelerde (fotoğraf, başlangıç) kullanılacak sınıf */
+body.no-scroll {
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+overflow: hidden;
+}
+
+/* --- KISIM 2: GENEL ELEMANLAR (KONTEYNER, SAHNELER, BAŞLIKLAR, BUTONLAR) --- */
+
 .container {
-    width: 100%;
-    max-width: 900px;
-    padding: 20px;
+width: 100%;
+max-width: 900px;
+padding: 20px;
 }
 
 .scene {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-    width: 100%;
+display: none;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+/*  min-height: 80vh; 
+ Bu değer, body.no-scroll ve question-scene 
+ içindeki ayarlar nedeniyle artık gereksiz.
+*/
+width: 100%;
 }
 
 .scene.active {
-    display: flex;
+display: flex;
 }
 
 h1, h2 {
-    color: var(--primary-color);
-    margin-bottom: 2rem;
+color: var(--primary-color);
+margin-bottom: 2rem;
 }
 
 button {
-    background-color: var(--primary-color);
-    color: #fff;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 127, 80, 0.4);
-    flex-shrink: 0; /* Butonların küçülmesini engeller */
+background-color: var(--primary-color);
+color: #fff;
+border: none;
+padding: 15px 30px;
+font-size: 1.2rem;
+font-weight: 600;
+border-radius: 50px;
+cursor: pointer;
+transition: all 0.3s ease;
+box-shadow: 0 4px 15px rgba(255, 127, 80, 0.4);
+flex-shrink: 0; /* Butonların küçülmesini engeller */
 }
 
 button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(255, 127, 80, 0.6);
+transform: translateY(-3px);
+box-shadow: 0 6px 20px rgba(255, 127, 80, 0.6);
 }
 
 button:disabled {
-    background-color: #555;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+background-color: #555;
+cursor: not-allowed;
+transform: none;
+box-shadow: none;
 }
 
 .button-group {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
+display: flex;
+gap: 20px;
+margin-top: 20px;
 }
 
 .button-group-vertical {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 80%;
-    max-width: 400px;
+display: flex;
+flex-direction: column;
+gap: 15px;
+width: 80%;
+max-width: 400px;
 }
+
+/* --- KISIM 3: ÖZEL SAHNELER (FOTOĞRAF, SORULAR, MEKTUP, VİDEO) --- */
 
 /* Fotoğraf Sahnesi */
 .photo-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+/* body.no-scroll aktifken bu sahne görünecek */
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+overflow: hidden;
 }
 
 .falling-photo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 250px;
-    height: auto;
-    border-radius: 15px;
-    border: 5px solid white;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    animation: fall 8s linear forwards;
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+width: 250px;
+height: auto;
+border-radius: 15px;
+border: 5px solid white;
+box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+animation: fall 8s linear forwards;
 }
 
 .photo-error-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2.5rem;
-    z-index: 100;
-    opacity: 0;
-    animation: fadeIn 1s 4s forwards;
-    text-shadow: 0 0 15px black;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+font-size: 2.5rem;
+z-index: 100;
+opacity: 0;
+animation: fadeIn 1s 4s forwards;
+text-shadow: 0 0 15px black;
 }
 
 @keyframes fall {
-    0% { top: -300px; }
-    100% { top: 110vh; }
+0% { top: -300px; }
+100% { top: 110vh; }
 }
 
 @keyframes fadeIn {
-    to { opacity: 1; }
+to { opacity: 1; }
 }
 
 /* Soru Sahneleri */
 .question-scene {
-    background-color: var(--light-bg);
-    padding: 40px;
-    border-radius: 20px;
-    width: 100%;
-    max-height: 90vh;
+background-color: var(--light-bg);
+padding: 40px;
+border-radius: 20px;
+height: auto; 
+min-height: 100vh; 
+overflow-y: auto;
+justify-content: flex-start; /* İçeriği üste hizala */
+padding-top: 60px;
+padding-bottom: 60px;
 }
 
 .options-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-    text-align: left;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 15px;
+margin-bottom: 20px;
+text-align: left;
 }
 
 .options-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px;
-    text-align: left;
-    align-items: center;
+display: flex;
+flex-direction: column;
+gap: 15px;
+margin-bottom: 20px;
+text-align: left;
+align-items: center; /* Seçenekleri ortalar (dikey listede) */
 }
 
 .options-list label, .options-grid label {
-    background-color: var(--secondary-color);
-    padding: 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+background-color: var(--secondary-color);
+padding: 15px;
+border-radius: 10px;
+cursor: pointer;
+transition: background-color 0.3s;
+display: flex;
+align-items: center;
+gap: 10px;
 }
 
 .options-list label:hover, .options-grid label:hover {
-    background-color: var(--primary-color);
+background-color: var(--primary-color);
 }
 
 input[type="checkbox"], input[type="radio"] {
-    width: 20px;
-    height: 20px;
-    accent-color: var(--primary-color);
+width: 20px;
+height: 20px;
+accent-color: var(--primary-color);
 }
 
 p#item-warning, p#escape-warning {
-    color: #ffc107;
-    margin-bottom: 15px;
-    visibility: hidden;
+color: #ffc107;
+margin-bottom: 15px;
+visibility: hidden;
 }
 
-/* --- YENİ EKLENEN/DEĞİŞTİRİLEN STİLLER: Kaydırma çubuğu için --- */
+/* Final Hikayesi ve Mektup Metin Alanları (Kaydırmalı) */
 #final-story-text {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 30px;
-    text-align: justify;
-    max-height: 55vh; /* Ekrana sığmazsa kaydırma çubuğu çıkar */
-    overflow-y: auto; /* Gerektiğinde dikey kaydırma çubuğu */
-    padding-right: 15px; /* Kaydırma çubuğu metne yapışmasın diye */
+font-size: 1.1rem;
+line-height: 1.8;
+margin-bottom: 30px;
+text-align: justify;
+max-height: 55vh; 
+overflow-y: auto; 
+padding-right: 15px; 
 }
 
 .letter {
-    text-align: justify;
-    background: #fdfdfd;
-    color: #333;
-    padding: 30px;
-    border-radius: 5px;
-    line-height: 1.9;
-    font-size: 1.1rem;
-    box-shadow: 0 0 20px rgba(255,255,255,0.2);
-    max-height: 70vh; /* Ekrana sığmazsa kaydırma çubuğu çıkar */
-    overflow-y: auto; /* Gerektiğinde dikey kaydırma çubuğu */
-    padding-right: 10px;
+text-align: justify;
+background: #fdfdfd;
+color: #333;
+padding: 30px;
+border-radius: 5px;
+line-height: 1.9;
+font-size: 1.1rem;
+box-shadow: 0 0 20px rgba(255,255,255,0.2);
+max-height: 70vh; 
+overflow-y: auto; 
+padding-right: 10px;
 }
 
 .birthday-wish {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 1.8rem;
-    color: var(--primary-color);
+text-align: center;
+margin-top: 30px;
+font-size: 1.8rem;
+color: var(--primary-color);
 }
 
-/* Webkit tabanlı tarayıcılar için (Chrome, Safari) kaydırma çubuğu tasarımı */
+/* Kaydırma Çubuğu Tasarımı */
 ::-webkit-scrollbar {
-  width: 8px;
+width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--secondary-color);
-  border-radius: 10px;
+background: var(--secondary-color);
+border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
-  border-radius: 10px;
+background: var(--primary-color);
+border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff6347;
+background: #ff6347;
 }
-/* ------------------------------------------------------------------------- */
+
+/* Video Oynatıcı Ekranı */
+.video-overlay {
+display: none; 
+position: fixed; 
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.95); 
+z-index: 1000; 
+justify-content: center;
+align-items: center;
+}
+
+.video-overlay video {
+max-width: 95%; 
+max-height: 90%;
+outline: none;
+border: 2px solid white; 
+}
+
+.video-close-btn {
+position: absolute;
+top: 20px;
+right: 30px;
+font-size: 40px; 
+font-weight: bold;
+color: white;
+background: transparent;
+border: none;
+cursor: pointer;
+z-index: 1001; 
+line-height: 1;
+padding: 0;
+}
+
+
+/* =================================== */
+/* MOBİL UYUMLULUK */
+/* (Ekran 768px'den küçükse) */
+/* =================================== */
+@media (max-width: 768px) {
+
+.container {
+padding: 10px; 
+}
+
+.question-scene {
+padding-left: 15px;
+padding-right: 15px;
+padding-top: 40px; 
+padding-bottom: 40px;
+min-height: 100vh;
+}
+
+/* Yan yana duran butonları alt alta diz */
+.button-group {
+flex-direction: column; 
+width: 90%; 
+max-width: 400px;
+}
+
+button, .choice-btn, .plan-btn {
+padding: 14px 22px;
+font-size: 1rem; 
+}
+
+.button-group .choice-btn {
+width: 100%;
+}
+
+/* Başlık boyutlarını ayarla */
+h1, h2 {
+margin-bottom: 1.5rem;
+}
+h2 {
+font-size: 1.4rem; 
+line-height: 1.5; 
+}
+.photo-error-text {
+font-size: 1.8rem;
+}
+.birthday-wish {
+font-size: 1.5rem;
+}
+
+/* Izgara (grid) seçimleri tek sütuna düşür */
+.options-grid {
+grid-template-columns: 1fr; 
+}
+
+.options-list label, .options-grid label {
+font-size: 0.95rem;
+}
+
+/* Düşen fotoğraf boyutunu küçült */
+.falling-photo {
+width: 200px; 
+}
+
+/* Mektup ve final hikayesi ayarları */
+.letter {
+padding: 20px 15px; 
+font-size: 1rem;
+line-height: 1.7;
+max-height: 65vh; 
+}
+
+#final-story-text {
+font-size: 1rem;
+line-height: 1.7;
+max-height: 60vh;
+padding-right: 10px; 
+}
+
+/* Video kapatma butonu mobilde daha kolay tıklansın */
+.video-close-btn {
+top: 15px;
+right: 15px;
+font-size: 35px;
+}
+}
