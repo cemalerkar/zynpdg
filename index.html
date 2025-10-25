@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeynep'e Sürpriz!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <div id="scene-start" class="scene active">
+            <button id="btn-start">22 Yaşına Gir</button>
+        </div>
+
+        <div id="scene-fake-loading" class="scene">
+            <div id="loading-text">Yükleniyor...</div>
+            <div id="error1-text" style="display: none;">
+                <h1>ERROR: DAHA ESKİYE DÖNÜLÜYOR</h1>
+                <button id="btn-go-back">Hadi Dönelim O Zaman</button>
+            </div>
+        </div>
+        
+        <div id="scene-photos" class="scene photo-container">
+            <h1 id="error2-text" class="photo-error-text">ERROR: ZAMAN DİLİMLERİ KARIŞTI</h1>
+        </div>
+
+        <div id="scene-is-it-over" class="scene">
+            <h1>Eeee bu kadar mıydı, bitti mi?</h1>
+            <div class="button-group">
+                <button id="btn-not-over" class="choice-btn">Bitmemiştir Ya</button>
+                <button id="btn-what-else" class="choice-btn">Daha Ne Olsun</button>
+            </div>
+        </div>
+
+        <div id="scene-island-items" class="scene question-scene">
+            <h2>Şimdi oyun zamanı; bir adaya düştün ve yanına aşağıdakilerden üçü olacak. Hangilerini seçerdin?</h2>
+            <div id="item-options" class="options-grid">
+                <label><input type="checkbox" name="item" value="Şarj Gerektirmeyen Telefon"> Şarj Gerektirmeyen Telefon</label>
+                <label><input type="checkbox" name="item" value="Sınırsız Yemek"> Sınırsız Yemek</label>
+                <label><input type="checkbox" name="item" value="Bodyguard"> Bodyguard</label>
+                <label><input type="checkbox" name="item" value="Her Şeyi Öğrenebileceğin Kitap"> Her Şeyi Öğrenebileceğin Kitap</label>
+                <label><input type="checkbox" name="item" value="Gemi"> Gemi</label>
+                <label><input type="checkbox" name="item" value="Lüks Villa"> Lüks Villa</label>
+                <label><input type="checkbox" name="item" value="Sonsuz Tatlı Su Kaynağı"> Sonsuz Tatlı Su Kaynağı</label>
+            </div>
+            <p id="item-warning">Lütfen tam olarak 3 seçenek seçin.</p>
+            <button id="btn-items-continue" disabled>Devam</button>
+        </div>
+
+        <div id="scene-island-person" class="scene question-scene">
+            <h2>Merak etme seni tek başına yollamıyoruz, aşağıdakilerden birini yanına alacak olsan kimi alırdın?</h2>
+            <div id="person-options" class="options-list">
+                <label><input type="radio" name="person" value="Annem"> Annem</label>
+                <label><input type="radio" name="person" value="Babam"> Babam</label>
+                <label><input type="radio" name="person" value="Farat"> Farat</label>
+                <label><input type="radio" name="person" value="Cer"> Cer</label>
+                <label><input type="radio" name="person" value="Bakırköy Agaları"> Bakırköy Agaları</label>
+                <label><input type="radio" name="person" value="Urzb hocalardan biri"> Urzb hocalardan biri</label>
+            </div>
+            <button id="btn-person-continue" disabled>Devam</button>
+        </div>
+
+        <div id="scene-dilemma" class="scene question-scene">
+            <h2 id="dilemma-question"></h2>
+            <div class="button-group">
+                <button id="btn-escape" class="choice-btn">Kaçalım</button>
+                <button id="btn-stay" class="choice-btn">Ölmesinler Ya</button>
+            </div>
+        </div>
+
+        <div id="scene-escape-people" class="scene question-scene">
+            <h2>Kaçışınız başarılı, yanınızda kimleri almak istersiniz?</h2>
+            <div id="escape-people-options" class="options-grid">
+                </div>
+            <p id="escape-warning">Lütfen tam olarak 2 kişi seçin.</p>
+            <button id="btn-escape-people-continue" disabled>Devam</button>
+        </div>
+
+        <div id="scene-activity-plan" class="scene question-scene">
+            <h2 id="activity-question"></h2>
+            <div class="button-group-vertical">
+                <button class="plan-btn">Hiiç takılırız</button>
+                <button class="plan-btn">Aktivite ararız</button>
+                <button class="plan-btn">İlla bir şey mi yapmamız gerek</button>
+                <button class="plan-btn">Güneşlenmem lazım</button>
+                <button class="plan-btn">Story atıcam 1 saniye</button>
+            </div>
+        </div>
+
+        <div id="scene-final-story" class="scene question-scene">
+            <p id="final-story-text"></p>
+            <button id="btn-read-envelope">Zarfı Oku</button>
+        </div>
+
+        <div id="scene-letter" class="scene question-scene">
+            <div class="letter">
+                <p>Gönül isterdi ki kullanabileceğin fiziksel bir hediye alayım ama zaz isimli biri kendine ısrarla bir şey aldırtmadığı için diş fırçasını (prestij olan) bile alamadım. Yıllardır minik bir zaz olarak yanımdaydın, tabi artık minik değilsin ama olsun, şimdi 22 yaşına geldin ve hala 22 yıldır beni beklemeden 22 oluyorsun. İnsan 2 gün bilmemne saat bekleyip beraber girer 22 yaşına... Neyse konumuz bu değil şakayı bir tarafa bırakırsak 22 yaşına geldin ve hayatında gerçekten başarılı ve mutlu olacağına dair en ufak bir şüphem yok, çünkü istediğini kopararak ısırarak alan biri olduğunu biliyorum, yıllardır yanlış tanımadıysam öyle yani. Bu başarı ve mutluluğu yalnızca kariyerin için demiyorum tabi sonuçta Farat ile birlikte bir aşk hayatın da olacak, orada da yine planladığın gibi mutlu olacağından şüphem yok. Hak ettiğinden daha da iyi yerlere geleceğinin de farkındayım ve bunun için de her zamanki gibi yine her konuda desteğimi sürdüreceğimi biliyorsun zaten, hangi konuda olursa olsun seni yargılamadan sana yardım edeceğimi unutma en azından hediyem buymuş gibi olsun. Hayatındaki her şeyin sıkıntısız olmaya başlayacağı, hiçbir zaman ikilemde kalmayacağın netliklerle dolu, senin için hayırlısı olan istediğin her şeyin gerçekleşeceği ve mutsuzluğun ne olduğunu tamamen unutacağın nice yıllara. Bu yaşın sana bol şans bol para bol aşk bol sağlık bol bol istediğin her şeyden versin. 2 gün bilmemne saate ben de 22 oluyorum bensiz yaramazlık yapma sakın.</p>
+                <h2 class="birthday-wish">DOĞUUM GÜNÜNNN KUTLUUU OLSUUUN ZEEYNEEEP</h2>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
