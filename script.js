@@ -30,6 +30,33 @@ function preloadImages(imageUrls) {
 //   ANA UYGULAMA KODU
 // ===================================
 document.addEventListener('DOMContentLoaded', () => {
+        const firebaseConfig = {
+    apiKey: "AIzaSyDsPQ4IEVvJOSpSSixwythaBhvgL6aSmNM",
+    authDomain: "zdg22-37bb7.firebaseapp.com",
+    databaseURL: "https://zdg22-37bb7-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "zdg22-37bb7",
+    storageBucket: "zdg22-37bb7.firebasestorage.app",
+    messagingSenderId: "206792126428",
+    appId: "1:206792126428:web:10864a4878ab16dcfea919",
+    measurementId: "G-HF075DJEGW"
+  };
+
+    // Firebase'i başlat
+    firebase.initializeApp(firebaseConfig);
+
+    const pad = (n) => (n < 10 ? '0' + n : n);
+
+    // Belirtilen uzunlukta rastgele harf/sayı üreten fonksiyon
+    function generateRandomString(length) {
+        let result = '';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+
 
     const scenes = document.querySelectorAll('.scene');
     const userChoices = {
@@ -244,10 +271,43 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Sahne 8b/9: Aktivite ---
+    // --- Sahne 8b/9: Aktivite ---
+    // --- Sahne 8b/9: Aktivite ---
     document.querySelectorAll('.plan-btn').forEach(button => {
         button.addEventListener('click', (e) => {
             userChoices.plan = e.target.textContent;
             generateFinalStory();
+
+            // === ÖZEL ANAHTAR OLUŞTURMA BAŞLANGIÇ ===
+            const now = new Date();
+            // Tarih: 28-10-2025
+            const date = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()}`;
+            // Saat: 22-15-30
+            const time = `${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+            // Rastgele kısım: AbCdE
+            const randomPart = generateRandomString(5); 
+            
+            // İstenen format: 28-10-2025_22-15-30+AbCdE
+            const customKey = `${date}_${time}+${randomPart}`;
+            // === ÖZEL ANAHTAR OLUŞTURMA BİTİŞ ===
+
+
+            // === FİREBASE'E KAYDETME KODU (GÜNCELLENDİ) ===
+            try {
+                // Güncellenmiş kontrol noktası
+
+                const db = firebase.database();
+                
+                // .push() yerine .child(customKey).set() kullanıyoruz
+                db.ref('cevaplar').child(customKey).set(userChoices)
+                    .then(() => {
+                    })
+                    .catch((error) => {
+                    });
+            } catch (error) {
+            }
+            // === FİREBASE'E KAYDETME KODU BİTİŞ ===
+
             showScene('scene-final-story');
         });
     });
